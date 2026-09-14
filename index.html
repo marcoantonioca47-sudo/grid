@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DULEO | Gestão de Indicadores</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         LOGIN
+    ====================================================== -->
+
+    <section id="telaLogin" class="login-page">
+
+        <div class="login-card">
+
+            <div class="login-logo">
+                <img src="logo.png" alt="DULEO Materiais de Construção">
+            </div>
+
+            <div class="login-title">
+                <h1>Gestão de Indicadores</h1>
+                <p>Acesse sua conta para continuar</p>
+            </div>
+
+            <form id="formLogin">
+
+                <div class="campo">
+                    <label for="loginUsuario">Nome de usuário</label>
+
+                    <input
+                        type="text"
+                        id="loginUsuario"
+                        placeholder="Digite seu usuário"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="loginSenha">Senha</label>
+
+                    <input
+                        type="password"
+                        id="loginSenha"
+                        placeholder="Digite sua senha"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="loginFilial">Filial</label>
+
+                    <select id="loginFilial" required>
+                        <option value="">Selecione a filial</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-login">
+                    Entrar
+                </button>
+
+                <p id="mensagemLogin" class="mensagem-login"></p>
+
+            </form>
+
+            <div class="login-footer">
+                <span>DULEO • Gestão de Indicadores</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         APLICAÇÃO
+    ====================================================== -->
+
+    <div id="aplicacao" class="app hidden">
+
+        <!-- Overlay para celular -->
+        <div id="overlayMenu" class="overlay-menu"></div>
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside id="sidebar" class="sidebar">
+
+            <div class="sidebar-top">
+
+                <button
+                    id="botaoFecharMenu"
+                    class="btn-fechar-menu"
+                    type="button"
+                    aria-label="Fechar menu"
+                >
+                    ×
+                </button>
+
+                <div class="sidebar-logo">
+                    <img src="logo.png" alt="DULEO">
+                </div>
+
+                <div class="sidebar-titulo">
+                    <span>Gestão de Indicadores</span>
+                </div>
+
+            </div>
+
+
+            <nav class="menu-navegacao">
+
+                <button
+                    class="menu-item ativo"
+                    data-tela="inicio"
+                    type="button"
+                >
+                    <span class="menu-icone">⌂</span>
+                    <span>Início</span>
+                </button>
+
+                <button
+                    class="menu-item"
+                    data-tela="indicadores"
+                    type="button"
+                >
+                    <span class="menu-icone">▦</span>
+                    <span>Indicadores</span>
+                </button>
+
+                <button
+                    class="menu-item"
+                    data-tela="geral"
+                    type="button"
+                >
+                    <span class="menu-icone">◈</span>
+                    <span>Indicador Geral</span>
+                </button>
+
+                <button
+                    class="menu-item"
+                    data-tela="dashboard"
+                    type="button"
+                >
+                    <span class="menu-icone">▥</span>
+                    <span>Dashboard</span>
+                </button>
+
+                <button
+                    class="menu-item"
+                    data-tela="metas"
+                    type="button"
+                >
+                    <span class="menu-icone">◎</span>
+                    <span>Metas</span>
+                </button>
+
+                <button
+                    class="menu-item"
+                    data-tela="ia"
+                    type="button"
+                >
+                    <span class="menu-icone">✦</span>
+                    <span>Assistente IA</span>
+                </button>
+
+                <button
+                    class="menu-item"
+                    data-tela="relatorios"
+                    type="button"
+                >
+                    <span class="menu-icone">▤</span>
+                    <span>Relatórios</span>
+                </button>
+
+                <button
+                    class="menu-item"
+                    data-tela="configuracoes"
+                    type="button"
+                >
+                    <span class="menu-icone">⚙</span>
+                    <span>Configurações</span>
+                </button>
+
+            </nav>
+
+
+            <!-- Usuário logado -->
+
+            <div class="perfil-sidebar">
+
+                <div id="avatarUsuario" class="avatar">
+                    U
+                </div>
+
+                <div class="perfil-info">
+
+                    <strong id="nomeUsuarioLogado">
+                        Usuário
+                    </strong>
+
+                    <span id="tipoUsuarioLogado">
+                        Usuário
+                    </span>
+
+                    <small id="filialUsuarioLogado">
+                        Filial
+                    </small>
+
+                </div>
+
+                <button
+                    id="botaoSairSidebar"
+                    class="btn-sair-mini"
+                    type="button"
+                    title="Sair"
+                >
+                    ↪
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =================================================
+             ÁREA PRINCIPAL
+        ================================================== -->
+
+        <main class="main-content">
+
+
+            <!-- Cabeçalho mobile -->
+
+            <header class="mobile-header">
+
+                <button
+                    id="botaoAbrirMenu"
+                    class="btn-menu-mobile"
+                    type="button"
+                    aria-label="Abrir menu"
+                >
+                    ☰
+                </button>
+
+                <div class="mobile-brand">
+                    <img src="logo.png" alt="DULEO">
+                </div>
+
+                <span id="badgeFilialAtual" class="badge-filial">
+                    Filial
+                </span>
+
+            </header>
+
+
+            <!-- Título da tela -->
+
+            <div class="topbar">
+
+                <div>
+                    <span class="topbar-label">SISTEMA</span>
+
+                    <h2 id="tituloTela">
+                        Início
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 INÍCIO
+            ================================================== -->
+
+            <section id="tela-inicio" class="tela ativa">
+
+                <div class="pagina-cabecalho">
+
+                    <div>
+                        <span class="eyebrow">VISÃO GERAL</span>
+
+                        <h1 id="saudacaoUsuario">
+                            Olá! Acompanhe seus resultados.
+                        </h1>
+
+                        <p>
+                            Acompanhe o desempenho dos indicadores da filial.
+                        </p>
+                    </div>
+
+                    <button
+                        id="novoIndicadorInicio"
+                        class="btn btn-primary"
+                        type="button"
+                    >
+                        + Novo indicador
+                    </button>
+
+                </div>
+
+
+                <!-- Filtro do autor -->
+
+                <div
+                    id="filtroFilialAutorInicio"
+                    class="filtro-autor-wrap hidden"
+                >
+                    <label for="seletorFilialAutorInicio">
+                        Visualizar filial
+                    </label>
+
+                    <select id="seletorFilialAutorInicio">
+                        <option value="todas">
+                            Todas as filiais
+                        </option>
+                    </select>
+                </div>
+
+
+                <!-- Cards -->
+
+                <div class="cards">
+
+                    <article class="card">
+
+                        <div class="card-icone azul">
+                            ▦
+                        </div>
+
+                        <div>
+                            <span>Indicadores ativos</span>
+                            <strong id="totalIndicadores">0</strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="card">
+
+                        <div class="card-icone verde">
+                            ✓
+                        </div>
+
+                        <div>
+                            <span>Média dos resultados</span>
+                            <strong id="mediaIndicadores">0%</strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="card">
+
+                        <div class="card-icone vermelho">
+                            !
+                        </div>
+
+                        <div>
+                            <span>Indicadores críticos</span>
+                            <strong id="indicadoresCriticos">0</strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="card">
+
+                        <div class="card-icone roxo">
+                            %
+                        </div>
+
+                        <div>
+                            <span>Conformidade</span>
+                            <strong id="conformidadeInicio">0%</strong>
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- Gráfico e status -->
+
+                <div class="grid-duplo">
+
+                    <div class="painel">
+
+                        <div class="painel-cabecalho">
+
+                            <div>
+                                <h3>Desempenho por categoria</h3>
+
+                                <p>
+                                    Média dos resultados cadastrados.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div
+                            id="graficoInicio"
+                            class="grafico-barras"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <div class="painel">
+
+                        <div class="painel-cabecalho">
+
+                            <div>
+                                <h3>Status dos indicadores</h3>
+
+                                <p>
+                                    Situação atual.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div id="statusInicio">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Indicadores recentes -->
+
+                <div class="painel">
+
+                    <div class="painel-cabecalho">
+
+                        <div>
+                            <h3>Indicadores recentes</h3>
+
+                            <p>
+                                Últimos indicadores cadastrados.
+                            </p>
+                        </div>
+
+                        <button
+                            id="verTodos"
+                            class="btn-link"
+                            type="button"
+                        >
+                            Ver todos →
+                        </button>
+
+                    </div>
+
+                    <div id="indicadoresRecentes">
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 INDICADORES
+            ================================================== -->
+
+            <section id="tela-indicadores" class="tela">
+
+                <div class="pagina-cabecalho">
+
+                    <div>
+                        <span class="eyebrow">CONTROLE</span>
+
+                        <h1>Indicadores</h1>
+
+                        <p>
+                            Cadastre, edite e acompanhe os indicadores.
+                        </p>
+                    </div>
+
+                    <button
+                        id="novoIndicador2"
+                        class="btn btn-primary"
+                        type="button"
+                    >
+                        + Novo indicador
+                    </button>
+
+                </div>
+
+
+                <div class="painel filtros">
+
+                    <div class="campo-filtro">
+
+                        <label for="filtroCategoria">
+                            Categoria
+                        </label>
+
+                        <select id="filtroCategoria">
+
+                            <option value="todas">
+                                Todas as categorias
+                            </option>
+
+                            <option value="carregamentos">
+                                Carregamentos
+                            </option>
+
+                            <option value="separacao">
+                                Separação
+                            </option>
+
+                            <option value="conformidade">
+                                Conformidade
+                            </option>
+
+                            <option value="conferencia">
+                                Conferência
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="painel">
+
+                    <div
+                        id="tabelaIndicadores"
+                        class="tabela-responsiva"
+                    >
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 INDICADOR GERAL
+            ================================================== -->
+
+            <section id="tela-geral" class="tela">
+
+                <div class="pagina-cabecalho">
+
+                    <div>
+                        <span class="eyebrow">ANÁLISE</span>
+
+                        <h1>Indicador Geral</h1>
+
+                        <p>
+                            Visualize o desempenho filtrado por mês.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="painel filtros">
+
+                    <div
+                        id="filtroFilialGeralWrap"
+                        class="campo-filtro"
+                    >
+
+                        <label for="filtroFilialGeral">
+                            Filial
+                        </label>
+
+                        <select id="filtroFilialGeral">
+                            <option value="todas">
+                                Todas as filiais
+                            </option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="campo-filtro">
+
+                        <label for="filtroMesGeral">
+                            Mês
+                        </label>
+
+                        <input
+                            type="month"
+                            id="filtroMesGeral"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="geral-destaque">
+
+                    <div>
+                        <span>Indicador geral</span>
+
+                        <strong id="valorGeral">
+                            0%
+                        </strong>
+
+                        <p id="descricaoGeral">
+                            Nenhum indicador encontrado.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="cards cards-3">
+
+                    <article class="card">
+
+                        <div class="card-icone azul">
+                            #
+                        </div>
+
+                        <div>
+                            <span>Total analisado</span>
+                            <strong id="geralTotal">0</strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="card">
+
+                        <div class="card-icone verde">
+                            🎯
+                        </div>
+
+                        <div>
+                            <span>Meta média</span>
+                            <strong id="geralMeta">0%</strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="card">
+
+                        <div class="card-icone roxo">
+                            %
+                        </div>
+
+                        <div>
+                            <span>Resultado médio</span>
+                            <strong id="geralResultado">0%</strong>
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <div class="painel">
+
+                    <div
+                        id="tabelaGeral"
+                        class="tabela-responsiva"
+                    >
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 DASHBOARD
+            ================================================== -->
+
+            <section id="tela-dashboard" class="tela">
+
+                <div class="pagina-cabecalho">
+
+                    <div>
+                        <span class="eyebrow">INDICADORES</span>
+
+                        <h1>Dashboard</h1>
+
+                        <p>
+                            Resumo visual do desempenho.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="cards">
+
+                    <article class="card">
+
+                        <div class="card-icone azul">
+                            ▦
+                        </div>
+
+                        <div>
+                            <span>Total de indicadores</span>
+                            <strong id="dashboardTotal">0</strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="card">
+
+                        <div class="card-icone verde">
+                            %
+                        </div>
+
+                        <div>
+                            <span>Média geral</span>
+                            <strong id="dashboardMedia">0%</strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="card">
+
+                        <div class="card-icone vermelho">
+                            !
+                        </div>
+
+                        <div>
+                            <span>Indicadores críticos</span>
+                            <strong id="dashboardCriticos">0</strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="card">
+
+                        <div class="card-icone roxo">
+                            ✓
+                        </div>
+
+                        <div>
+                            <span>Conformidade</span>
+                            <strong id="dashboardConformidade">0%</strong>
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <div class="painel">
+
+                    <div class="painel-cabecalho">
+
+                        <div>
+                            <h3>Desempenho por categoria</h3>
+
+                            <p>
+                                Resultado médio dos indicadores.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="graficoDashboard"
+                        class="grafico-barras grafico-grande"
+                    >
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 METAS
+            ================================================== -->
+
+            <section id="tela-metas" class="tela">
+
+                <div class="pagina-cabecalho">
+
+                    <div>
+                        <span class="eyebrow">PLANEJAMENTO</span>
+
+                        <h1>Metas</h1>
+
+                        <p>
+                            Defina e acompanhe suas metas.
+                        </p>
+                    </div>
+
+                    <button
+                        id="novaMeta"
+                        class="btn btn-primary"
+                        type="button"
+                    >
+                        + Nova meta
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="listaMetas"
+                    class="metas-grid"
+                >
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ASSISTENTE IA
+            ================================================== -->
+
+            <section id="tela-ia" class="tela">
+
+                <div class="pagina-cabecalho">
+
+                    <div>
+                        <span class="eyebrow">INTELIGÊNCIA</span>
+
+                        <h1>Assistente IA</h1>
+
+                        <p>
+                            Analise automaticamente os indicadores e
+                            identifique pontos de atenção.
+                        </p>
+                    </div>
+
+                    <button
+                        id="atualizarAnaliseIA"
+                        class="btn btn-primary"
+                        type="button"
+                    >
+                        ↻ Atualizar análise
+                    </button>
+
+                </div>
+
+
+                <div class="painel filtros">
+
+                    <div class="campo-filtro">
+
+                        <label for="filtroFilialIA">
+                            Filial
+                        </label>
+
+                        <select id="filtroFilialIA">
+                            <option value="todas">
+                                Todas as filiais
+                            </option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="campo-filtro">
+
+                        <label for="filtroMesIA">
+                            Mês
+                        </label>
+
+                        <input
+                            type="month"
+                            id="filtroMesIA"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="cards">
+
+                    <article class="card">
+
+                        <div class="card-icone azul">
+                            #
+                        </div>
+
+                        <div>
+                            <span>Indicadores analisados</span>
+                            <strong id="iaTotal">0</strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="card">
+
+                        <div class="card-icone verde">
+                            %
+                        </div>
+
+                        <div>
+                            <span>Média dos resultados</span>
+                            <strong id="iaMedia">0%</strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="card">
+
+                        <div class="card-icone vermelho">
+                            !
+                        </div>
+
+                        <div>
+                            <span>Críticos</span>
+                            <strong id="iaCriticos">0</strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="card">
+
+                        <div class="card-icone roxo">
+                            ✓
+                        </div>
+
+                        <div>
+                            <span>Atingimento</span>
+                            <strong id="iaAtingimento">0%</strong>
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <div class="ia-grid">
+
+                    <div class="painel ia-card-principal">
+
+                        <div class="ia-titulo">
+
+                            <div class="ia-icon">
+                                ✦
+                            </div>
+
+                            <div>
+                                <h3>Resumo da análise</h3>
+
+                                <p>
+                                    Interpretação automática dos dados.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div id="iaResumo" class="ia-texto">
+                            Nenhum dado disponível.
+                        </div>
+
+                    </div>
+
+
+                    <div class="painel">
+
+                        <div class="painel-cabecalho">
+                            <div>
+                                <h3>Recomendações</h3>
+                                <p>Pontos sugeridos pelo assistente.</p>
+                            </div>
+                        </div>
+
+                        <div id="iaRecomendacoes">
+                            Nenhuma recomendação disponível.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="ia-grid">
+
+                    <div class="painel">
+
+                        <div class="painel-cabecalho">
+                            <div>
+                                <h3>Indicadores críticos</h3>
+                                <p>Indicadores abaixo da meta.</p>
+                            </div>
+                        </div>
+
+                        <div id="iaCriticosLista">
+                            Nenhum indicador crítico.
+                        </div>
+
+                    </div>
+
+
+                    <div class="painel">
+
+                        <div class="painel-cabecalho">
+                            <div>
+                                <h3>Tendências por categoria</h3>
+                                <p>Comparação das categorias.</p>
+                            </div>
+                        </div>
+
+                        <div id="iaTendencias">
+                            Sem dados para tendência.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 RELATÓRIOS
+            ================================================== -->
+
+            <section id="tela-relatorios" class="tela">
+
+                <div class="pagina-cabecalho">
+
+                    <div>
+                        <span class="eyebrow">DOCUMENTOS</span>
+
+                        <h1>Relatórios</h1>
+
+                        <p>
+                            Gere um resumo dos indicadores.
+                        </p>
+                    </div>
+
+                    <button
+                        id="gerarRelatorio"
+                        class="btn btn-primary"
+                        type="button"
+                    >
+                        Gerar relatório
+                    </button>
+
+                </div>
+
+
+                <div class="painel relatorio-painel">
+
+                    <div class="relatorio-cabecalho">
+
+                        <div class="relatorio-icon">
+                            ▤
+                        </div>
+
+                        <div>
+                            <h3>Relatório de desempenho</h3>
+
+                            <p>
+                                Resumo dos indicadores da filial atual.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="relatorioResultado"
+                        class="relatorio-resultado"
+                    >
+                        <div class="relatorio-vazio">
+                            Clique em "Gerar relatório" para criar o resumo.
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 CONFIGURAÇÕES
+            ================================================== -->
+
+            <section id="tela-configuracoes" class="tela">
+
+                <div class="pagina-cabecalho">
+
+                    <div>
+                        <span class="eyebrow">SISTEMA</span>
+                        <span>Configurações</span>
+
+                        <p>
+                            Gerencie preferências e acessos do sistema.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- Tema -->
+
+                <div class="painel">
+
+                    <div class="settings-row">
+
+                        <div>
+                            <strong>Tema</strong>
+
+                            <span>
+                                Escolha entre tema claro e escuro.
+                            </span>
+                        </div>
+
+                        <select id="seletorTema">
+
+                            <option value="claro">
+                                Tema claro
+                            </option>
+
+                            <option value="escuro">
+                                Tema escuro
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Área do autor -->
+
+                <div id="areaAutor" class="hidden">
+
+                    <div class="section-title">
+                        <div>
+                            <span class="eyebrow">ADMINISTRAÇÃO</span>
+                            <h2>Gerenciamento do sistema</h2>
+                        </div>
+                    </div>
+
+
+                    <!-- Filiais -->
+
+                    <div class="painel">
+
+                        <div class="painel-cabecalho">
+
+                            <div>
+                                <h3>Filiais</h3>
+
+                                <p>
+                                    Cadastre e altere as filiais do sistema.
+                                </p>
+                            </div>
+
+                            <button
+                                id="novaFilial"
+                                class="btn btn-primary"
+                                type="button"
+                            >
+                                + Nova filial
+                            </button>
+
+                        </div>
+
+                        <div
+                            id="listaFiliais"
+                            class="tabela-responsiva"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <!-- Usuários -->
+
+                    <div class="painel">
+
+                        <div class="painel-cabecalho">
+
+                            <div>
+                                <h3>Usuários</h3>
+
+                                <p>
+                                    Controle usuários, perfis e filiais
+                                    autorizadas.
+                                </p>
+                            </div>
+
+                            <button
+                                id="novoUsuario"
+                                class="btn btn-primary"
+                                type="button"
+                            >
+                                + Novo usuário
+                            </button>
+
+                        </div>
+
+                        <div
+                            id="tabelaUsuarios"
+                            class="tabela-responsiva"
+                        >
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Sair -->
+
+                <div class="painel sair-painel">
+
+                    <div class="settings-row">
+
+                        <div>
+                            <strong>Sair da conta</strong>
+
+                            <span>
+                                Encerrar sua sessão atual.
+                            </span>
+                        </div>
+
+                        <button
+                            id="botaoSair"
+                            class="btn btn-danger"
+                            type="button"
+                        >
+                            Sair
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- =====================================================
+         MODAL INDICADOR
+    ====================================================== -->
+
+    <div id="modalIndicador" class="modal hidden">
+
+        <div class="modal-conteudo modal-grande">
+
+            <button
+                id="fecharModal"
+                class="modal-fechar"
+                type="button"
+            >
+                ×
+            </button>
+
+            <div class="modal-cabecalho">
+
+                <span class="eyebrow">INDICADORES</span>
+
+                <h2 id="tituloModalIndicador">
+                    Novo indicador
+                </h2>
+
+                <p>
+                    Preencha todas as informações do indicador.
+                </p>
+
+            </div>
+
+
+            <form id="formIndicador">
+
+                <input
+                    type="hidden"
+                    id="idIndicador"
+                >
+
+
+                <div class="form-grid">
+
+                    <div class="campo campo-full">
+
+                        <label for="nomeIndicador">
+                            Nome do indicador
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nomeIndicador"
+                            placeholder="Ex.: Produtividade"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="categoriaIndicador">
+                            Categoria
+                        </label>
+
+                        <select
+                            id="categoriaIndicador"
+                            required
+                        >
+
+                            <option value="">
+                                Selecione
+                            </option>
+
+                            <option value="carregamentos">
+                                Carregamentos
+                            </option>
+
+                            <option value="separacao">
+                                Separação
+                            </option>
+
+                            <option value="conformidade">
+                                Conformidade
+                            </option>
+
+                            <option value="conferencia">
+                                Conferência
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="dataIndicador">
+                            Data
+                        </label>
+
+                        <input
+                            type="date"
+                            id="dataIndicador"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="metaIndicador">
+                            Meta (%)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="metaIndicador"
+                            min="0"
+                            max="100"
+                            step="0.01"
+                            placeholder="Ex.: 90"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="resultadoIndicador">
+                            Resultado atual (%)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="resultadoIndicador"
+                            min="0"
+                            max="100"
+                            step="0.01"
+                            placeholder="Ex.: 92"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo campo-full">
+
+                        <label for="filialIndicador">
+                            Filial
+                        </label>
+
+                        <select
+                            id="filialIndicador"
+                            required
+                        >
+                            <option value="">
+                                Selecione a filial
+                            </option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="previewStatus"
+                    class="preview-status"
+                >
+                    O status aparecerá aqui conforme você preencher
+                    meta e resultado.
+                </div>
+
+
+                <div class="acoes-modal">
+
+                    <button
+                        id="cancelarModal"
+                        class="btn btn-secondary"
+                        type="button"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        id="botaoSalvarIndicador"
+                        class="btn btn-primary"
+                        type="submit"
+                    >
+                        Salvar indicador
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MODAL DETALHES
+    ====================================================== -->
+
+    <div id="modalDetalhes" class="modal hidden">
+
+        <div class="modal-conteudo modal-detalhes">
+
+            <button
+                id="fecharDetalhes"
+                class="modal-fechar"
+                type="button"
+            >
+                ×
+            </button>
+
+            <div class="modal-cabecalho">
+
+                <span class="eyebrow">
+                    DETALHES
+                </span>
+
+                <h2>
+                    Indicador
+                </h2>
+
+            </div>
+
+            <div id="conteudoDetalhes">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MODAL META
+    ====================================================== -->
+
+    <div id="modalMeta" class="modal hidden">
+
+        <div class="modal-conteudo">
+
+            <button
+                id="fecharModalMeta"
+                class="modal-fechar"
+                type="button"
+            >
+                ×
+            </button>
+
+            <div class="modal-cabecalho">
+
+                <span class="eyebrow">
+                    METAS
+                </span>
+
+                <h2 id="tituloModalMeta">
+                    Nova meta
+                </h2>
+
+                <p>
+                    Cadastre ou edite uma meta.
+                </p>
+
+            </div>
+
+
+            <form id="formMeta">
+
+                <input
+                    type="hidden"
+                    id="idMeta"
+                >
+
+
+                <div class="campo">
+
+                    <label for="nomeMeta">
+                        Nome da meta
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nomeMeta"
+                        placeholder="Ex.: Atingir 95%"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="valorMeta">
+                        Valor da meta (%)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="valorMeta"
+                        min="0"
+                        max="100"
+                        step="0.01"
+                        placeholder="Ex.: 95"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="descricaoMeta">
+                        Descrição
+                    </label>
+
+                    <textarea
+                        id="descricaoMeta"
+                        rows="4"
+                        placeholder="Descreva a meta..."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="filialMeta">
+                        Filial
+                    </label>
+
+                    <select
+                        id="filialMeta"
+                        required
+                    >
+                        <option value="">
+                            Selecione a filial
+                        </option>
+                    </select>
+
+                </div>
+
+
+                <div class="acoes-modal">
+
+                    <button
+                        id="cancelarModalMeta"
+                        class="btn btn-secondary"
+                        type="button"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                    >
+                        Salvar meta
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MODAL FILIAL
+    ====================================================== -->
+
+    <div id="modalFilial" class="modal hidden">
+
+        <div class="modal-conteudo">
+
+            <button
+                id="fecharModalFilial"
+                class="modal-fechar"
+                type="button"
+            >
+                ×
+            </button>
+
+            <div class="modal-cabecalho">
+
+                <span class="eyebrow">
+                    FILIAIS
+                </span>
+
+                <h2 id="tituloModalFilial">
+                    Nova filial
+                </h2>
+
+                <p>
+                    Cadastre ou edite uma filial.
+                </p>
+
+            </div>
+
+
+            <form id="formFilial">
+
+                <input
+                    type="hidden"
+                    id="idFilial"
+                >
+
+
+                <div class="campo">
+
+                    <label for="nomeFilial">
+                        Nome da filial
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nomeFilial"
+                        placeholder="Ex.: Matriz"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="acoes-modal">
+
+                    <button
+                        id="cancelarModalFilial"
+                        class="btn btn-secondary"
+                        type="button"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                    >
+                        Salvar filial
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MODAL USUÁRIO
+    ====================================================== -->
+
+    <div id="modalUsuario" class="modal hidden">
+
+        <div class="modal-conteudo modal-grande">
+
+            <button
+                id="fecharModalUsuario"
+                class="modal-fechar"
+                type="button"
+            >
+                ×
+            </button>
+
+            <div class="modal-cabecalho">
+
+                <span class="eyebrow">
+                    USUÁRIOS
+                </span>
+
+                <h2 id="tituloModalUsuario">
+                    Novo usuário
+                </h2>
+
+                <p>
+                    Defina o perfil e as filiais que o usuário poderá acessar.
+                </p>
+
+            </div>
+
+
+            <form id="formUsuario">
+
+                <input
+                    type="hidden"
+                    id="idUsuario"
+                >
+
+
+                <div class="form-grid">
+
+                    <div class="campo">
+
+                        <label for="nomeNovoUsuario">
+                            Nome de usuário
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nomeNovoUsuario"
+                            placeholder="Digite o usuário"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="senhaNovoUsuario">
+                            Senha
+                        </label>
+
+                        <input
+                            type="password"
+                            id="senhaNovoUsuario"
+                            placeholder="Digite a senha"
+                        >
+
+                    </div>
+
+
+                    <div class="campo campo-full">
+
+                        <label for="tipoNovoUsuario">
+                            Perfil
+                        </label>
+
+                        <select id="tipoNovoUsuario" required>
+
+                            <option value="coordenador">
+                                Coordenador
+                            </option>
+
+                            <option value="supervisor">
+                                Supervisor
+                            </option>
+
+                            <option value="gerente">
+                                Gerente
+                            </option>
+
+                            <option value="usuario">
+                                Usuário
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>
+                        Filiais com acesso
+                    </label>
+
+                    <div
+                        id="listaFiliaisUsuario"
+                        class="checkbox-grid"
+                    >
+                    </div>
+
+                </div>
+
+
+                <div class="acoes-modal">
+
+                    <button
+                        id="cancelarModalUsuario"
+                        class="btn btn-secondary"
+                        type="button"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                    >
+                        Salvar usuário
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MODAL SENHA
+    ====================================================== -->
+
+    <div id="modalSenha" class="modal hidden">
+
+        <div class="modal-conteudo">
+
+            <button
+                id="fecharModalSenha"
+                class="modal-fechar"
+                type="button"
+            >
+                ×
+            </button>
+
+            <div class="modal-cabecalho">
+
+                <span class="eyebrow">
+                    SEGURANÇA
+                </span>
+
+                <h2>
+                    Redefinir senha
+                </h2>
+
+                <p>
+                    Digite a nova senha do usuário.
+                </p>
+
+            </div>
+
+
+            <form id="formSenha">
+
+                <input
+                    type="hidden"
+                    id="idUsuarioSenha"
+                >
+
+
+                <div class="campo">
+
+                    <label for="novaSenha">
+                        Nova senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="novaSenha"
+                        minlength="4"
+                        placeholder="Digite a nova senha"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="acoes-modal">
+
+                    <button
+                        id="cancelarModalSenha"
+                        class="btn btn-secondary"
+                        type="button"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                    >
+                        Redefinir senha
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+        id="toast"
+        class="toast"
+        role="status"
+        aria-live="polite"
+    >
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
